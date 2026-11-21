@@ -1,0 +1,15 @@
+LA OFICINA · ORANGE CANARIAS
+============================
+
+Contenido:
+  index.html      -> la web completa (oficina, saludos, minijuegos y actuación de Navidad)
+  villancico.mp3  -> la canción de la actuación (tiene que llamarse exactamente así)
+
+Cómo subirlo a GitHub Pages:
+  1. En tu repositorio, pulsa "Add file" -> "Upload files".
+  2. Arrastra index.html y villancico.mp3 (los dos sueltos, no la carpeta).
+  3. Pulsa "Commit changes".
+  4. Si aún no lo tienes activado: Settings -> Pages -> Branch "main", carpeta "/ (root)" -> Save.
+  5. En uno o dos minutos estará en https://TU_USUARIO.github.io/NOMBRE_DEL_REPOSITORIO/
+
+Si más adelante añadís fotos para el corcho, súbelas en una carpeta "fotos/".
