@@ -438,6 +438,16 @@
   .cabecera-dcha{display:flex; flex-direction:column; align-items:flex-end; gap:8px}
   .capa-actuacion{position:fixed; inset:0; z-index:95; background:#0a0b18; animation:aparecer .35s ease}
   .escenario{position:absolute; left:0; right:0; top:0; bottom:66px; overflow:hidden}
+  .controles-actuacion .btn-x2{min-width:74px}
+  .controles-actuacion .btn.btn-x2.activo{background:linear-gradient(135deg,#ff7900,#ffb347); color:#1d1206; box-shadow:0 3px 0 #a14d00; animation:x2-late 1.1s ease-in-out infinite}
+  @keyframes x2-late{50%{transform:scale(1.07)}}
+  .sello-x2{position:absolute; z-index:6; right:16px; top:64px; padding:6px 12px; border-radius:12px; font-weight:900; font-size:22px; letter-spacing:.5px;
+    color:#1d1206; background:linear-gradient(135deg,#ffd23f,#ff7900); box-shadow:0 0 22px rgba(255,150,30,.6); transform:rotate(8deg); pointer-events:none}
+  .escenario:not(.rapido) .sello-x2{display:none}
+  .escenario.rapido.tocando .sello-x2{animation:x2-sello .5s ease-in-out infinite alternate}
+  @keyframes x2-sello{to{transform:rotate(-6deg) scale(1.12)}}
+  .escenario.rapido #nieve-escenario i{animation-duration:3s !important}
+  @media (max-width:760px){ .sello-x2{right:auto; left:14px; top:300px; font-size:17px} }
   .fondo-escenario{position:absolute; inset:0; width:100%; height:100%}
   .estrellita{animation:titilar 2.6s ease-in-out infinite alternate}
   @keyframes titilar{from{opacity:.25} to{opacity:1}}
@@ -932,6 +942,7 @@
 </div>
 <div class="capa-actuacion" id="capa-actuacion" hidden role="dialog" aria-modal="true" aria-label="Actuación de Navidad de Orange Canarias">
   <div class="escenario" id="escenario">
+    <span class="sello-x2" aria-hidden="true">⚡ x2</span>
     <svg class="fondo-escenario" id="fondo-escenario" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
     <div class="focos" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="nieve-escenario" id="nieve-escenario" aria-hidden="true"></div>
@@ -956,6 +967,7 @@
     <button class="btn" id="btn-tocar">▶ Empezar la actuación</button>
     <button class="btn sec" id="btn-principio">⏮ Desde el principio</button>
     <button class="btn sec" id="btn-aplausos">👏 Aplaudir</button>
+    <button class="btn sec btn-x2 activo" id="btn-velocidad" aria-pressed="true" title="Cambiar la velocidad de la actuación">⚡ x2</button>
     <button class="cerrar-act" id="btn-cerrar-act" aria-label="Cerrar la actuación">×</button>
   </div>
   <audio id="audio-villancico" src="villancico.mp3" preload="metadata"></audio>
@@ -1000,12 +1012,12 @@ const EQUIPO = [
    Añadir así: { src:"fotos/cena.jpg", pie:"Cena de Navidad" }
    ========================================================= */
 const FOTOS = [
-  { src:"fotos/foto1.jpg", pie:"Tarde de cañas" },
-  { src:"fotos/foto2.jpg", pie:"Noche de fiesta" },
-  { src:"fotos/foto3.jpg", pie:"Vermut al sol" },
-  { src:"fotos/foto4.jpg", pie:"Merienda en la oficina" },
-  { src:"fotos/foto5.jpg", pie:"Afterwork entre lucecitas" },
-  { src:"fotos/foto6.jpg", pie:"Brindis de Navidad" },
+  { src:"foto1.jpg", pie:"Tarde de cañas" },
+  { src:"foto2.jpg", pie:"Noche de fiesta" },
+  { src:"foto3.jpg", pie:"Vermut al sol" },
+  { src:"foto4.jpg", pie:"Merienda en la oficina" },
+  { src:"foto5.jpg", pie:"Afterwork entre lucecitas" },
+  { src:"foto6.jpg", pie:"Brindis de Navidad" },
 ];
 
 /* ---------- utilidades ---------- */
@@ -3312,7 +3324,7 @@ const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2
 function bucleActuacion(ahora){
   if ($("capa-actuacion").hidden) return;
   let t;
-  if (modo === "sin"){ if (tocando) tSin += Math.min(.05, (ahora - (ultimoT || ahora)) / 1000); t = tSin; }
+  if (modo === "sin"){ if (tocando) tSin += Math.min(.05, (ahora - (ultimoT || ahora)) / 1000) * velocidad; t = tSin; }
   else t = audio.currentTime;
   ultimoT = ahora;
   if (tocando) pose(t, true);
@@ -3339,9 +3351,24 @@ function montarEscenario(){
     `<i style="left:${(i * 37) % 100}%;animation-duration:${(6 + (i * .7) % 6).toFixed(1)}s;animation-delay:-${(i * .53).toFixed(2)}s;width:${3 + i % 4}px;height:${3 + i % 4}px"></i>`).join("");
   prepararActores();
 }
+/* ---------- actuación "por dos": canción a doble velocidad y con voces de ardilla ---------- */
+let velocidad = 2;
+function aplicarVelocidad(){
+  audio.defaultPlaybackRate = velocidad; audio.playbackRate = velocidad;
+  // sin conservar el tono: a x2 las voces suben (más gracioso)
+  audio.preservesPitch = audio.mozPreservesPitch = audio.webkitPreservesPitch = velocidad === 1;
+  const b = $("btn-velocidad");
+  b.classList.toggle("activo", velocidad === 2);
+  b.setAttribute("aria-pressed", velocidad === 2);
+  b.textContent = velocidad === 2 ? "⚡ x2" : "x1";
+  b.title = velocidad === 2 ? "Volver a velocidad normal" : "¡Ponerla a x2!";
+  $("escenario").classList.toggle("rapido", velocidad === 2);
+}
+function cambiarVelocidad(){ velocidad = velocidad === 2 ? 1 : 2; aplicarVelocidad(); }
 function abrirActuacion(){
   focoActuacion = document.activeElement;
   montarEscenario();
+  aplicarVelocidad();
   $("capa-actuacion").hidden = false;
   document.body.style.overflow = "hidden";
   cancelAnimationFrame(rafAct); rafAct = requestAnimationFrame(bucleActuacion);
@@ -3414,6 +3441,8 @@ $("btn-actuacion").addEventListener("click", abrirActuacion);
 $("btn-tocar").addEventListener("click", alternarActuacion);
 $("btn-principio").addEventListener("click", desdeElPrincipio);
 $("btn-aplausos").addEventListener("click", aplaudir);
+$("btn-velocidad").addEventListener("click", cambiarVelocidad);
+audio.addEventListener("loadstart", () => { audio.playbackRate = velocidad; });
 $("btn-cerrar-act").addEventListener("click", cerrarActuacion);
 document.addEventListener("keydown", e => { if (!$("capa-actuacion").hidden && e.key === "Escape") cerrarActuacion(); });
 
