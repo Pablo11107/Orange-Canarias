@@ -561,6 +561,131 @@
     *{animation-duration:.01ms!important; animation-iteration-count:1!important}
     .hoja,.mundo{transition-duration:.01ms!important}
   }
+
+  /* =========== INTERRUPTOR "ENCENDER LA NAVIDAD" =========== */
+  .interruptor{
+    all:unset; cursor:pointer; position:relative; flex:none; align-self:flex-start; margin-top:-6px;
+    width:112px; height:168px; -webkit-tap-highlight-color:transparent;
+  }
+  .interruptor:focus-visible .int-placa{outline:3px solid var(--naranja); outline-offset:5px}
+  .int-placa{
+    position:absolute; inset:0; border-radius:14px; overflow:hidden;
+    background:linear-gradient(160deg,#3b4058 0%,#252839 55%,#1b1d2b 100%);
+    box-shadow:inset 0 0 0 3px #545a78, inset 0 0 0 6px #1a1c29, 0 6px 0 #11121c, 0 0 0 0 rgba(255,121,0,.0);
+    animation:int-respira 2.6s ease-in-out infinite;
+  }
+  .interruptor.listo .int-placa{animation:int-respira-fuerte 1.4s ease-in-out infinite}
+  @keyframes int-respira{
+    0%,100%{box-shadow:inset 0 0 0 3px #545a78, inset 0 0 0 6px #1a1c29, 0 6px 0 #11121c, 0 0 14px 2px rgba(255,121,0,.25)}
+    50%{box-shadow:inset 0 0 0 3px #545a78, inset 0 0 0 6px #1a1c29, 0 6px 0 #11121c, 0 0 26px 8px rgba(255,121,0,.45)}
+  }
+  @keyframes int-respira-fuerte{
+    0%,100%{box-shadow:inset 0 0 0 3px #ff9a3c, inset 0 0 0 6px #1a1c29, 0 6px 0 #11121c, 0 0 22px 6px rgba(255,121,0,.55)}
+    50%{box-shadow:inset 0 0 0 3px #ffc27a, inset 0 0 0 6px #1a1c29, 0 6px 0 #11121c, 0 0 44px 16px rgba(255,150,40,.8)}
+  }
+  .int-franja{position:absolute; left:6px; right:6px; top:6px; height:13px;
+    background:repeating-linear-gradient(-45deg,#ffcb2e 0 7px,#1d1d1d 7px 14px); opacity:.9}
+  .int-tornillo{position:absolute; width:7px; height:7px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#c9cde0,#5a5f7a)}
+  .int-luz{position:absolute; top:27px; left:50%; width:16px; height:16px; margin-left:-8px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#ffb27a,#d24a00 70%); box-shadow:0 0 10px 3px rgba(255,110,0,.6);
+    animation:int-parpadeo 1.3s steps(2) infinite}
+  @keyframes int-parpadeo{50%{background:radial-gradient(circle at 35% 35%,#7a4a33,#3b1c0c 70%); box-shadow:none}}
+  .int-ranura{position:absolute; left:50%; top:50px; width:22px; height:58px; margin-left:-11px; border-radius:11px;
+    background:linear-gradient(90deg,#0c0d14,#2a2d40 50%,#0c0d14); box-shadow:inset 0 2px 4px rgba(0,0,0,.8)}
+  .int-palanca{position:absolute; left:50%; bottom:50%; width:8px; height:42px; margin-left:-4px; border-radius:4px;
+    background:linear-gradient(90deg,#8d93ad,#e8ebf5 45%,#7b819b); transform-origin:50% 100%;
+    transform:rotate(-18deg); transition:transform .5s cubic-bezier(.5,-0.3,.3,1.4)}
+  .int-ranura::after{content:""; position:absolute; left:50%; top:50%; width:14px; height:14px; margin:-7px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#c9cde0,#4a4f68)}
+  .int-palanca i{position:absolute; left:50%; top:-14px; width:26px; height:26px; margin-left:-13px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ffd0a3,#ff7900 45%,#b34a00 100%); box-shadow:0 3px 6px rgba(0,0,0,.5)}
+  .interruptor:hover .int-palanca{transform:rotate(-6deg)}
+  .interruptor.activado .int-palanca{transform:rotate(198deg)}
+  .interruptor.activado .int-luz{animation:none; background:radial-gradient(circle at 35% 35%,#fff6c9,#ffc400 65%); box-shadow:0 0 18px 7px rgba(255,210,60,.9)}
+  .int-texto{position:absolute; left:4px; right:4px; bottom:12px; text-align:center; color:#ffe2bf; font-weight:800;
+    font-size:12.5px; line-height:1.15; letter-spacing:.2px; text-transform:uppercase; text-shadow:0 0 8px rgba(255,121,0,.7)}
+  .int-bocadillo{
+    position:absolute; right:calc(100% + 10px); top:56px; white-space:nowrap; pointer-events:none;
+    background:#1f2233; color:#fff; font-size:12.5px; font-weight:800; padding:7px 11px; border-radius:10px;
+    box-shadow:0 8px 18px -8px rgba(0,0,0,.5); opacity:0; transform:translateX(6px); transition:opacity .4s, transform .4s;
+  }
+  .int-bocadillo::after{content:""; position:absolute; right:-6px; top:50%; margin-top:-6px; border:6px solid transparent; border-right:0; border-left-color:#1f2233}
+  .interruptor.listo .int-bocadillo, .interruptor:hover .int-bocadillo{opacity:1; transform:none}
+  .interruptor.listo .int-bocadillo{animation:int-bote 1.4s ease-in-out infinite}
+  @keyframes int-bote{50%{transform:translateX(-4px)}}
+  .chispa-int{position:fixed; width:6px; height:6px; border-radius:50%; pointer-events:none; z-index:120;
+    background:#ffd27a; box-shadow:0 0 8px 2px #ff9a3c}
+  @media (max-width:760px){
+    .centro-pared .cartel{display:none}
+    .interruptor{width:96px; height:146px; margin-top:-4px}
+    .int-ranura{top:44px; height:50px}
+    .int-palanca{height:36px}
+    .int-texto{font-size:11px; bottom:9px}
+    .int-bocadillo{display:none}
+  }
+
+  /* =========== VUELO DEL DRON SOBRE LAS PALMAS =========== */
+  .capa-dron{position:fixed; inset:0; z-index:130; background:#02030a; overflow:hidden; animation:aparecer .5s ease}
+  .capa-dron canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+  .franja-cine{position:absolute; left:0; right:0; height:7vh; background:#000; z-index:2; transition:transform 1.6s cubic-bezier(.6,0,.2,1); pointer-events:none}
+  .franja-cine.arriba{top:0} .franja-cine.abajo{bottom:0}
+  .capa-dron.final .franja-cine.arriba{transform:translateY(-100%)}
+  .capa-dron.final .franja-cine.abajo{transform:translateY(100%)}
+  .hud-dron{position:absolute; z-index:3; left:22px; top:calc(7vh + 14px); display:flex; gap:16px; align-items:center;
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:rgba(255,255,255,.72); letter-spacing:1px;
+    text-shadow:0 1px 2px #000; transition:opacity .8s; pointer-events:none}
+  .hud-dron .rec{color:#ff4d4d; animation:rec 1s steps(2) infinite}
+  @keyframes rec{50%{opacity:.25}}
+  .capa-dron.final .hud-dron{opacity:0}
+  .marco-hud{position:absolute; z-index:2; inset:calc(7vh + 8px) 14px; pointer-events:none; transition:opacity .8s}
+  .marco-hud i{position:absolute; width:22px; height:22px; border:2px solid rgba(255,255,255,.45)}
+  .marco-hud i:nth-child(1){left:0; top:0; border-right:0; border-bottom:0}
+  .marco-hud i:nth-child(2){right:0; top:0; border-left:0; border-bottom:0}
+  .marco-hud i:nth-child(3){left:0; bottom:0; border-right:0; border-top:0}
+  .marco-hud i:nth-child(4){right:0; bottom:0; border-left:0; border-top:0}
+  .capa-dron.final .marco-hud{opacity:0}
+  .rotulo-lugar{position:absolute; z-index:3; left:clamp(18px,5vw,64px); bottom:calc(7vh + 26px); color:#fff; pointer-events:none;
+    opacity:0; transform:translateY(10px); transition:opacity .7s, transform .7s; max-width:80vw}
+  .rotulo-lugar.visible{opacity:1; transform:none}
+  .rotulo-lugar small{display:block; font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:#ff9a3c; margin-bottom:5px}
+  .rotulo-lugar b{display:block; font-size:clamp(18px,2.6vw,28px); font-weight:800; letter-spacing:-.2px; text-shadow:0 2px 14px rgba(0,0,0,.8)}
+  .rotulo-lugar::before{content:""; display:block; width:44px; height:3px; background:#ff7900; margin-bottom:10px; border-radius:2px; box-shadow:0 0 10px #ff7900}
+
+  .final-dron{position:absolute; z-index:4; left:50%; top:34%; transform:translate(-50%,-50%); width:min(92vw,900px);
+    text-align:center; color:#fff; pointer-events:none}
+  .final-dron h2{margin:0; font-family:Georgia,"Times New Roman",serif; font-style:italic; font-weight:700;
+    font-size:clamp(34px,7vw,84px); line-height:1.05; letter-spacing:-.5px; color:#fff6e6;
+    text-shadow:0 0 18px rgba(255,190,90,.95), 0 0 46px rgba(255,121,0,.75), 0 0 90px rgba(255,121,0,.45)}
+  .final-dron p{margin:18px 0 0; font-weight:800; font-size:clamp(15px,2.3vw,24px); letter-spacing:.5px; color:#ffd9a8;
+    text-shadow:0 0 14px rgba(255,121,0,.8)}
+  .final-dron .firma{display:inline-flex; align-items:center; gap:10px; margin-top:22px; font-weight:700; font-size:clamp(13px,1.6vw,16px);
+    color:rgba(255,255,255,.85); letter-spacing:1px}
+  .final-dron .firma b{color:#ff7900; font-weight:800}
+  .final-dron .firma::before,.final-dron .firma::after{content:""; width:34px; height:1px; background:rgba(255,200,140,.6)}
+  .final-dron > *{opacity:0; transform:translateY(16px) scale(.98); filter:blur(6px); transition:opacity 1.4s ease, transform 1.4s cubic-bezier(.2,.8,.2,1), filter 1.4s}
+  .final-dron.visible > *{opacity:1; transform:none; filter:none}
+  .final-dron.visible p{transition-delay:1.1s}
+  .final-dron.visible .firma{transition-delay:2s}
+  .final-dron .acciones-final{margin-top:26px; pointer-events:auto; display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .final-dron.visible .acciones-final{transition-delay:3s}
+  .btn-dron{border:none; cursor:pointer; font-family:inherit; font-weight:800; font-size:14px; padding:11px 18px; border-radius:999px;
+    color:#fff; background:rgba(255,255,255,.12); box-shadow:inset 0 0 0 1px rgba(255,255,255,.35); backdrop-filter:blur(6px)}
+  .btn-dron.prim{background:linear-gradient(135deg,#ff7900,#ffab4a); color:#1d1206; box-shadow:0 0 22px rgba(255,121,0,.55)}
+  .btn-dron:hover{filter:brightness(1.12)}
+  .dron-volver{position:absolute; z-index:5; right:16px; top:calc(7vh + 8px); padding:8px 14px; font-size:13px; opacity:.75}
+  .dron-volver:hover,.dron-volver:focus-visible{opacity:1}
+  .dron-sonido{position:absolute; z-index:5; right:16px; bottom:calc(7vh + 12px); width:40px; height:40px; padding:0; font-size:17px; opacity:.8}
+  .capa-dron.final .dron-volver{top:14px} .capa-dron.final .dron-sonido{bottom:14px}
+  .aviso-musica{position:absolute; z-index:5; right:64px; bottom:calc(7vh + 22px); font-size:12px; color:rgba(255,255,255,.65); pointer-events:none}
+  .capa-dron.final .aviso-musica{bottom:24px}
+  .fundido-dron{position:absolute; inset:0; z-index:6; background:#000; pointer-events:none; opacity:1; transition:opacity 1.6s ease}
+  .fundido-dron.fuera{opacity:0}
+  @media (max-width:760px){
+    .final-dron{top:32%}
+    .hud-dron{left:14px; gap:10px; font-size:10.5px}
+    .hud-dron .coord, .hud-dron #hud-tc{display:none}
+    .rotulo-lugar{bottom:calc(7vh + 18px)}
+    .dron-sonido{right:12px} .dron-volver{right:12px}
+  }
 </style>
 </head>
 <body>
@@ -654,6 +779,16 @@
       <path d="M28 52 q2 -4 0 -8 M33 52 q2 -4 0 -8" stroke="#fff" stroke-width="1.5" fill="none" opacity=".6"/>
       <circle cx="18" cy="82" r="3" fill="#ff7900"/><circle cx="28" cy="82" r="3" fill="#8d99ae"/>
     </svg>
+    <button class="interruptor" id="btn-navidad" aria-label="Encender la Navidad en Canarias">
+      <span class="int-placa">
+        <span class="int-franja"></span>
+        <span class="int-tornillo" style="left:8px;bottom:8px"></span><span class="int-tornillo" style="right:8px;bottom:8px"></span>
+        <span class="int-luz"></span>
+        <span class="int-ranura"><span class="int-palanca"><i></i></span></span>
+        <span class="int-texto">Encender<br>la Navidad</span>
+      </span>
+      <span class="int-bocadillo">¡Enciende la Navidad en Canarias! ✨</span>
+    </button>
 
     <div class="ventana" aria-hidden="true">
       <svg viewBox="0 0 180 118" preserveAspectRatio="none">
@@ -773,6 +908,28 @@
 </div>
 
 <!-- =========== ACTUACIÓN DE NAVIDAD =========== -->
+
+<!-- =========== ENCENDER LA NAVIDAD: vuelo del dron =========== -->
+<div class="capa-dron" id="capa-dron" hidden role="dialog" aria-modal="true" aria-label="La Navidad se enciende en Las Palmas de Gran Canaria">
+  <canvas id="lienzo-dron" aria-hidden="true"></canvas>
+  <div class="franja-cine arriba"></div><div class="franja-cine abajo"></div>
+  <div class="marco-hud" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="hud-dron" aria-hidden="true"><span class="rec">● REC</span><span id="hud-tc">00:00:00:00</span><span id="hud-alt">ALT 120 m</span><span class="coord">28°08′N 15°26′O</span></div>
+  <div class="rotulo-lugar" id="rotulo-lugar" aria-live="polite"></div>
+  <div class="final-dron" id="final-dron">
+    <h2>¡Feliz Navidad, Canarias!</h2>
+    <p>Conectando ilusión en cada rincón</p>
+    <span class="firma">El equipo de <b>Orange Canarias</b></span>
+    <div class="acciones-final">
+      <button class="btn-dron" id="dron-repetir">↺ Ver otra vez</button>
+      <button class="btn-dron prim" id="dron-salir">Volver a la oficina</button>
+    </div>
+  </div>
+  <button class="btn-dron dron-volver" id="dron-volver">← Volver a la oficina</button>
+  <span class="aviso-musica" id="aviso-musica" hidden>🎵 Sin música: falta villancico.mp3</span>
+  <button class="btn-dron dron-sonido" id="dron-sonido" aria-label="Silenciar música">🔊</button>
+  <div class="fundido-dron" id="fundido-dron"></div>
+</div>
 <div class="capa-actuacion" id="capa-actuacion" hidden role="dialog" aria-modal="true" aria-label="Actuación de Navidad de Orange Canarias">
   <div class="escenario" id="escenario">
     <svg class="fondo-escenario" id="fondo-escenario" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
@@ -842,7 +999,14 @@ const EQUIPO = [
    FOTOS DEL CORCHO
    Añadir así: { src:"fotos/cena.jpg", pie:"Cena de Navidad" }
    ========================================================= */
-const FOTOS = [];
+const FOTOS = [
+  { src:"fotos/foto1.jpg", pie:"Tarde de cañas" },
+  { src:"fotos/foto2.jpg", pie:"Noche de fiesta" },
+  { src:"fotos/foto3.jpg", pie:"Vermut al sol" },
+  { src:"fotos/foto4.jpg", pie:"Merienda en la oficina" },
+  { src:"fotos/foto5.jpg", pie:"Afterwork entre lucecitas" },
+  { src:"fotos/foto6.jpg", pie:"Brindis de Navidad" },
+];
 
 /* ---------- utilidades ---------- */
 function tono(hex, d){
@@ -1742,6 +1906,7 @@ const despues = (ms, fn) => temporizadores.push(setTimeout(fn, ms));
 function limpiar(){ temporizadores.forEach(clearTimeout); temporizadores = []; if (pararAnim){ pararAnim(); pararAnim = null; } }
 
 function abrir(c, origen){
+  $("btn-navidad").classList.add("listo");
   limpiar();
   actual = c;
   ultimoFoco = origen || document.activeElement;
@@ -3251,6 +3416,768 @@ $("btn-principio").addEventListener("click", desdeElPrincipio);
 $("btn-aplausos").addEventListener("click", aplaudir);
 $("btn-cerrar-act").addEventListener("click", cerrarActuacion);
 document.addEventListener("keydown", e => { if (!$("capa-actuacion").hidden && e.key === "Escape") cerrarActuacion(); });
+
+
+/* =========================================================
+   ENCENDER LA NAVIDAD: vuelo de dron sobre Las Palmas de G.C.
+   Escena 3D sencilla en canvas (proyección en perspectiva):
+   el haz naranja de la fibra recorre la ciudad y la va encendiendo.
+   ========================================================= */
+const DRON = (() => {
+  const capa = $("capa-dron"), lienzo = $("lienzo-dron"), ctx = lienzo.getContext("2d");
+  let W = 0, H = 0, DPR = 1, F = 1, raf = 0, t0 = 0, tAnt = 0, abierta = false, mundo = null;
+  let audio = null, volObjetivo = .85, silenciado = false, rotuloActual = -1, finalMostrado = false;
+  let confeti = [], chispas = [], foco = null;
+
+  /* ---------- números pseudoaleatorios repetibles ---------- */
+  let semilla = 7;
+  const rnd = () => (semilla = (semilla * 16807) % 2147483647) / 2147483647;
+  const entre = (a, b) => a + (b - a) * rnd();
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const suave = k => k <= 0 ? 0 : k >= 1 ? 1 : k * k * (3 - 2 * k);
+  const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+
+  /* ---------- sprite de brillo (se dibuja escalado: mucho más rápido que gradientes) ---------- */
+  const brillo = document.createElement("canvas"); brillo.width = brillo.height = 64;
+  { const g = brillo.getContext("2d"), r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(.18, "rgba(255,255,255,.75)");
+    r.addColorStop(.45, "rgba(255,255,255,.18)"); r.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64); }
+  const tintes = {};
+  function sprite(color){
+    if (tintes[color]) return tintes[color];
+    const c = document.createElement("canvas"); c.width = c.height = 64; const g = c.getContext("2d");
+    g.drawImage(brillo, 0, 0); g.globalCompositeOperation = "source-in"; g.fillStyle = color; g.fillRect(0, 0, 64, 64);
+    g.globalCompositeOperation = "lighter"; g.globalAlpha = .55; g.drawImage(brillo, 16, 16, 32, 32);
+    return tintes[color] = c;
+  }
+
+  /* ---------- costa: profundidad (z) de la orilla según x ---------- */
+  function costa(x){
+    if (x < -470) return 22;
+    if (x < 150){ const u = (x + 160) / 310; return 22 + 46 * (1 - u * u); }   // la bahía de Las Canteras
+    if (x < 370) return 22;
+    if (x < 400) return lerp(22, 150, suave((x - 370) / 30));                   // entrada del puerto
+    if (x < 760) return 150;
+    if (x < 790) return lerp(150, 22, suave((x - 760) / 30));
+    return 22;                                                                   // costa de La Isleta
+  }
+
+  /* ---------- recorrido del haz (la fibra) ---------- */
+  function construirRuta(){
+    const p = [];
+    const add = (x, y, z) => p.push({ x, y, z });
+    add(-640, 2, 12); add(-545, 2, 14);
+    for (let x = -460; x <= 140; x += 20) add(x, 2, costa(x) + 10);           // paseo de Las Canteras
+    add(165, 2, 40); add(165, 2, 120);                                          // avenida hacia el centro
+    add(120, 2, 128); add(75, 2, 166);                                          // hasta el árbol
+    for (let k = 0; k <= 24; k++){                                              // sube en espiral por el árbol
+      const a = k * .78, h = 4 + k * 2.4, r = 16 * (1 - h / 66);
+      add(75 + Math.cos(a) * r, h, 185 - Math.sin(a) * r);
+    }
+    add(75, 66, 185);
+    p.push({ x: 75, y: 66, z: 185, salto: true });                              // el haz baja del árbol
+    add(120, 2, 175); add(240, 2, 168); add(380, 2, 162);
+    for (let x = 400; x <= 750; x += 25) add(x, 2, 160);                       // borde del puerto
+    add(770, 2, 120); add(790, 2, 60); add(740, 2, 24); add(560, 2, 22); add(420, 2, 22);   // dique hasta el faro
+    let s = 0;
+    for (let i = 0; i < p.length; i++){
+      if (i && !p[i].salto) s += Math.hypot(p[i].x - p[i-1].x, p[i].y - p[i-1].y, p[i].z - p[i-1].z);
+      p[i].s = s;
+    }
+    return { p, L: s };
+  }
+  // tiempo en que se enciende algo situado en (x,y,z): cuando pasa el haz cerca, y más tarde cuanto más lejos esté
+  const T_HAZ0 = 1.8, T_HAZ1 = 12.2;
+  function tiempoEncendido(ruta, x, y, z, extra = 0){
+    let mejor = 1e9, sMejor = 0;
+    for (let i = 1; i < ruta.p.length; i++){
+      const a = ruta.p[i-1], b = ruta.p[i]; if (b.salto) continue;
+      const dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z, l2 = dx*dx + dy*dy + dz*dz || 1;
+      const k = clamp(((x - a.x) * dx + (y - a.y) * dy + (z - a.z) * dz) / l2, 0, 1);
+      const d = Math.hypot(a.x + dx*k - x, (a.y + dy*k - y) * .4, a.z + dz*k - z);
+      if (d < mejor){ mejor = d; sMejor = a.s + Math.sqrt(l2) * k; }
+    }
+    const tPaso = T_HAZ0 + (sMejor / ruta.L) * (T_HAZ1 - T_HAZ0);
+    return tPaso + Math.min(3.2, mejor * .006) + extra;
+  }
+
+  /* texturas de ventanas de un edificio (se pintan una vez) */
+  function texturas(b){
+    const K = 2.4, w = Math.max(4, Math.round((b.x1 - b.x0) * K)), h = Math.max(4, Math.round(b.h * K));
+    const hacer = (tenue) => {
+      const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d");
+      for (const v of b.vent){
+        if (tenue && !v.tenue) continue;
+        g.globalAlpha = tenue ? .4 : .93; g.fillStyle = v.col;
+        const vw = 1.6 * K, vh = 1.5 * K, x = v.u * w - vw / 2, y = h - (v.v + 1.5) * K;
+        if (y < 0) continue;
+        g.fillRect(Math.round(x), Math.round(y), Math.max(1, Math.round(vw)), Math.max(1, Math.round(vh)));
+      }
+      return c;
+    };
+    return { t: hacer(true), l: hacer(false) };
+  }
+
+  /* ---------- la ciudad ---------- */
+  const COL_VENT = ["#ffd27a", "#ffe6a8", "#ffb85c", "#cfe3ff", "#ffd27a", "#ff9a3c"];
+  const COL_BOMB = ["#ff3b3b", "#ffd23f", "#3ddc84", "#4dabff", "#ff7900", "#ffffff"];
+  function construirMundo(){
+    semilla = 11;
+    const ruta = construirRuta(), cosas = [];
+    const edificio = (x0, x1, z0, z1, h, opc = {}) => {
+      const b = { tipo: "edif", x0, x1, z0, z1, h, z: z0, ...opc };
+      b.tono = entre(-6, 6);
+      // ventanas en la fachada que mira al mar
+      const pisos = Math.max(2, Math.floor((h - 3) / 3.3)), anchoV = x1 - x0;
+      const cols = clamp(Math.floor(anchoV / 3.6), 2, 6);
+      b.vent = [];
+      for (let f = 0; f < pisos; f++) for (let c = 0; c < cols; c++){
+        if (rnd() < .08) continue;
+        const u = (c + .5) / cols, v = 2.2 + f * 3.3;
+        b.vent.push({ u, v, w: Math.min(1.9, anchoV / cols * .55), col: COL_VENT[(rnd() * COL_VENT.length) | 0],
+                      tenue: rnd() < .1, k: rnd(), parpadeo: rnd() < .04 });
+      }
+      b.tE = tiempoEncendido(ruta, (x0 + x1) / 2, 0, z0);
+      b.tex = null;
+      b.guirnalda = opc.guirnalda ?? rnd() < .32;
+      b.colG = COL_BOMB[(rnd() * COL_BOMB.length) | 0];
+      cosas.push(b); return b;
+    };
+    // Auditorio Alfredo Kraus
+    const aud = edificio(-545, -458, 30, 78, 24, { auditorio: true, guirnalda: false, tE: 0 });
+    aud.vent = []; aud.tE = tiempoEncendido(ruta, -500, 0, 30);
+    edificio(-482, -462, 26, 40, 46, { torre: true, guirnalda: false }).vent.length = 0;
+    cosas[cosas.length - 1].tE = aud.tE + .35;
+    // Guanarteme, al oeste del Auditorio
+    for (let x = -980; x < -568; ){ const w = entre(18, 28); edificio(x, x + w - entre(1.5, 3), 40, 40 + entre(14, 20), entre(14, 30)); x += w; }
+    // primera línea de Las Canteras: pared de edificios frente a la playa
+    for (let x = -450; x < 145; ){
+      const w = entre(16, 26), c = Math.max(costa(x), costa(x + w)) + 17;
+      edificio(x, x + w - entre(1.5, 3), c, c + entre(14, 20), entre(17, 34));
+      x += w;
+    }
+    // isla central (Santa Catalina / Guanarteme) y fondo
+    for (let z = 105; z < 400; z += entre(34, 44)){
+      for (let x = -800; x < 860; ){
+        const w = entre(20, 32);
+        const enPuerto = x + w > 370 && x < 800 && z < 175;
+        const plaza = x + w > 40 && x < 112 && z > 140 && z < 230;
+        const avenida = (x < 178 && x + w > 152) || (x < -108 && x + w > -134);
+        if (!enPuerto && !plaza && !avenida && rnd() < .9){
+          const lejos = z > 300;
+          const alto = rnd() < .08 ? entre(42, 62) : entre(11, lejos ? 36 : 30);
+          edificio(x, x + w - entre(2, 5), z, z + entre(14, 22), alto);
+        }
+        x += w;
+      }
+    }
+    // Torre (la más alta, junto al istmo), corona naranja
+    edificio(222, 240, 52, 70, 92, { torreNaranja: true, guirnalda: false });
+
+    // árbol de Navidad gigante en la plaza
+    const arbol = { tipo: "arbol", x: 75, z: 185, h: 62, r: 17, bombillas: [] };
+    for (let k = 0; k < 150; k++){
+      const hh = 3 + (k / 150) * 54, a = k * .78, r = arbol.r * (1 - hh / arbol.h);
+      arbol.bombillas.push({ y: hh, a, r, col: COL_BOMB[k % COL_BOMB.length] });
+    }
+    arbol.tE = tiempoEncendido(ruta, 75, 2, 185);
+    arbol.tEstrella = T_HAZ0 + (ruta.p.find(q => q.salto).s / ruta.L) * (T_HAZ1 - T_HAZ0);
+    cosas.push(arbol);
+
+    // guirnaldas del paseo (postes con cadeneta de bombillas)
+    const paseo = { tipo: "cadena", puntos: [], z: 30 };
+    for (let x = -452; x <= 140; x += 4){
+      const tramo = ((x + 452) % 24) / 24, caida = Math.sin(tramo * Math.PI) * 2.2;
+      const zz = costa(x) + 12;
+      paseo.puntos.push({ x, y: 6 - caida, z: zz, col: COL_BOMB[((x + 452) / 4) % COL_BOMB.length | 0],
+                          tE: tiempoEncendido(ruta, x, 2, zz), poste: tramo === 0 });
+    }
+    paseo.z = 20; cosas.push(paseo);
+    // guirnaldas cruzando las avenidas (en zigzag)
+    for (const ax of [165, -121]){
+      for (let z = 50; z < 440; z += 26){
+        const c = { tipo: "cadena", puntos: [], z };
+        for (let k = 0; k <= 10; k++){
+          const u = k / 10, x = ax - 13 + 26 * u, y = 9 - Math.sin(u * Math.PI) * 2.4;
+          c.puntos.push({ x, y, z: z + u * 6, col: COL_BOMB[(k + z) % COL_BOMB.length | 0], tE: tiempoEncendido(ruta, x, 2, z, .1) });
+        }
+        cosas.push(c);
+      }
+    }
+    // muelle deportivo: pantalanes y veleros
+    for (const pz of [62, 92, 122]){
+      cosas.push({ tipo: "pantalan", x0: 420, x1: 720, z: pz });
+      for (let x = 430; x < 715; x += entre(15, 21)){
+        for (const lado of [-1, 1]){
+          if (rnd() < .35) continue;
+          const b = { tipo: "barco", x, z: pz + lado * 5, m: entre(8, 15), l: entre(6, 9), lado };
+          b.tE = tiempoEncendido(ruta, x, 2, pz); b.col = COL_BOMB[(rnd() * COL_BOMB.length) | 0];
+          cosas.push(b);
+        }
+      }
+    }
+    // dique y faro
+    cosas.push({ tipo: "dique", x0: 400, x1: 760, z: 24 });
+    cosas.push({ tipo: "faro", x: 420, z: 22, tE: T_HAZ1 });
+    // grúas del puerto
+    for (const gx of [600, 655, 710]) cosas.push({ tipo: "grua", x: gx, z: 182, h: 46, tE: tiempoEncendido(ruta, gx, 2, 182) });
+    // luces lejanas de la ciudad
+    const lejanas = [];
+    for (let i = 0; i < 1100; i++){
+      const x = entre(-1900, 2100), z = 430 + Math.pow(rnd(), 1.6) * 1700;
+      lejanas.push({ x, y: entre(0, 18), z, col: COL_VENT[(rnd() * COL_VENT.length) | 0], tE: tiempoEncendido(ruta, x, 0, z), tenue: rnd() < .14 });
+    }
+    // olas y estrellas
+    const olas = []; for (let i = 0; i < 130; i++) olas.push({ x: entre(-1400, 1600), z: entre(-420, 20), l: entre(4, 16), f: rnd() * 6.28 });
+    const estrellas = []; for (let i = 0; i < 420; i++) estrellas.push({ ax: entre(-2.6, 2.6), el: Math.pow(rnd(), 1.4) * 2.6 + .03, r: entre(.4, 1.5), f: rnd() * 6.28, v: entre(.6, 2.4) });
+    for (const b of cosas) if (b.tipo === "edif" && b.vent.length) b.tex = texturas(b);
+    cosas.sort((a, b) => b.z - a.z);
+    return { ruta, cosas, lejanas, olas, estrellas, aud, arbol, paseo };
+  }
+
+  /* ---------- cámara: plano secuencia ---------- */
+  //         t     x     y     z     inclinación (tan)
+  const CAM = [
+    [0,    -790, 118, -340, -.29],
+    [3.2,  -560, 112, -300, -.30],
+    [6.6,  -210, 122, -300, -.31],
+    [9.2,    80, 138, -255, -.35],
+    [11.8,  420, 132, -262, -.33],
+    [14.2,  130, 190, -470, -.29],
+    [16.0,  120, 196, -485, -.27],
+    [20.5,  120, 240, -620,  .03],
+  ];
+  const T_FINAL = 18.6;
+  function camara(t){
+    if (t >= CAM[CAM.length - 1][0]){
+      const k = CAM[CAM.length - 1], d = t - k[0];
+      return { x: k[1] + Math.sin(d * .25) * 12, y: k[2] + Math.sin(d * .4) * 4, z: k[3], p: k[4] };
+    }
+    let i = 0; while (t > CAM[i + 1][0]) i++;
+    const a = CAM[i], b = CAM[i + 1], k = suave((t - a[0]) / (b[0] - a[0]));
+    // Catmull-Rom suave en x/z para que no haya tirones
+    const P = j => CAM[clamp(j, 0, CAM.length - 1)];
+    const cr = (c) => { const p0 = P(i - 1)[c], p1 = a[c], p2 = b[c], p3 = P(i + 2)[c], u = (t - a[0]) / (b[0] - a[0]);
+      return .5 * ((2 * p1) + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (-p0 + 3 * p1 - 3 * p2 + p3) * u * u * u); };
+    return { x: cr(1), y: lerp(a[2], b[2], k), z: cr(3), p: lerp(a[4], b[4], k) };
+  }
+  let C = null, HY = 0;
+  function proy(x, y, z){
+    const dz = z - C.z; if (dz < 4) return null;
+    const s = F / dz;
+    return { x: W / 2 + (x - C.x) * s, y: HY + (C.y - y) * s, s };
+  }
+
+  /* ---------- dibujo ---------- */
+  function cielo(t, luzCiudad){
+    const g = ctx.createLinearGradient(0, HY - F * 1.6, 0, HY + 4);
+    g.addColorStop(0, "#03040d"); g.addColorStop(.55, "#0a1030"); g.addColorStop(.86, "#1d1a45");
+    g.addColorStop(1, `rgb(${60 + 90 * luzCiudad | 0},${36 + 40 * luzCiudad | 0},${70 - 10 * luzCiudad | 0})`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // estrellas (están en el infinito: solo dependen de la inclinación)
+    for (const e of mundo.estrellas){
+      const y = HY - F * e.el, x = W / 2 + F * e.ax * .9;
+      if (y < -4 || y > HY || x < -4 || x > W + 4) continue;
+      ctx.globalAlpha = .45 + .55 * Math.abs(Math.sin(t * e.v + e.f));
+      ctx.fillStyle = "#fff"; ctx.fillRect(x, y, e.r, e.r);
+    }
+    ctx.globalAlpha = 1;
+    // luna creciente
+    const ly = HY - F * .62, lx = W / 2 + F * .78;
+    if (ly > -60){
+      ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .5;
+      ctx.drawImage(sprite("#bcd2ff"), lx - 70, ly - 70, 140, 140);
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = "#f4f1e3"; ctx.beginPath(); ctx.arc(lx, ly, 15, 0, 7); ctx.fill();
+      ctx.fillStyle = "#0b1233"; ctx.beginPath(); ctx.arc(lx + 7, ly - 4, 14, 0, 7); ctx.fill();
+    }
+  }
+  function silueta(puntos, z, color, base = 0){
+    ctx.fillStyle = color; ctx.beginPath(); let primero = true;
+    for (const [x, y] of puntos){ const p = proy(x, y, z); if (!p) continue; primero ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); primero = false; }
+    const pd = proy(puntos[puntos.length - 1][0], base, z), pi = proy(puntos[0][0], base, z);
+    if (pd && pi){ ctx.lineTo(pd.x, pd.y); ctx.lineTo(pi.x, pi.y); }
+    ctx.fill();
+  }
+  const CUMBRE = [[-3400,0],[-2600,120],[-1800,210],[-1100,300],[-500,350],[0,390],[300,360],[700,330],[1200,250],[1900,150],[2800,60],[3600,0]];
+  const ISLETA = [[480,0],[560,40],[640,96],[720,130],[790,118],[860,150],[940,122],[1030,88],[1120,104],[1220,60],[1320,0]];
+  function tierraYMar(t, luz){
+    // montañas del fondo
+    silueta(CUMBRE, 3200, "#0d1230");
+    silueta(ISLETA, 820, "#0b0f25");
+    // luces lejanas
+    ctx.globalCompositeOperation = "lighter";
+    for (const tenues of [true, false]){
+      const grupos = {};
+      for (const l of mundo.lejanas){
+        const on = t > l.tE ? 1 : (l.tenue ? .4 : 0);
+        if (!on || (on < 1) !== tenues) continue;
+        const p = proy(l.x, l.y, l.z); if (!p || p.x < -5 || p.x > W + 5) continue;
+        const r = Math.max(1.5, p.s * 3);
+        (grupos[l.col] ||= new Path2D()).rect(p.x, p.y, r, r);
+      }
+      ctx.globalAlpha = tenues ? .35 : .85;
+      for (const c in grupos){ ctx.fillStyle = c; ctx.fill(grupos[c]); }
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    // tierra (de la orilla hacia el horizonte)
+    const xs = []; for (let x = -1500; x <= 1700; x += 10) xs.push(x);
+    ctx.fillStyle = "#0e1226"; ctx.beginPath();
+    let pIni = null;
+    for (const x of xs){ const p = proy(x, 0, costa(x)); if (!p) continue; if (!pIni){ ctx.moveTo(p.x, p.y); pIni = p; } else ctx.lineTo(p.x, p.y); }
+    ctx.lineTo(W + 10, HY - 2); ctx.lineTo(-10, HY - 2); ctx.closePath(); ctx.fill();
+    // arena de Las Canteras
+    ctx.fillStyle = `rgb(${46 + 40 * luz | 0},${42 + 28 * luz | 0},${54 + 6 * luz | 0})`; ctx.beginPath();
+    for (let x = -462; x <= 142; x += 6){ const p = proy(x, 0, costa(x)); if (p) x === -462 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); }
+    for (let x = 142; x >= -462; x -= 6){ const p = proy(x, 0, costa(x) + 11); if (p) ctx.lineTo(p.x, p.y); }
+    ctx.fill();
+    // mar
+    const g = ctx.createLinearGradient(0, HY, 0, H);
+    g.addColorStop(0, "#0f1838"); g.addColorStop(1, "#040814");
+    ctx.fillStyle = g; ctx.beginPath();
+    let empezado = false;
+    for (const x of xs){ const p = proy(x, 0, costa(x)); if (!p) continue; empezado ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); empezado = true; }
+    ctx.lineTo(W + 40, H + 40); ctx.lineTo(-40, H + 40); ctx.closePath(); ctx.fill();
+    // espuma en la orilla y en La Barra
+    ctx.strokeStyle = "rgba(190,210,255,.18)"; ctx.lineWidth = 1; ctx.beginPath(); empezado = false;
+    for (let x = -462; x <= 142; x += 6){ const p = proy(x, 0, costa(x) - 1 - Math.sin(t * 1.3 + x * .05)); if (!p) continue; empezado ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); empezado = true; }
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(190,210,255,.14)"; ctx.setLineDash([6, 9]); ctx.beginPath(); empezado = false;
+    for (let x = -360; x <= 40; x += 10){ const p = proy(x, 0, -14 + Math.sin(x * .02) * 4); if (!p) continue; empezado ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); empezado = true; }
+    ctx.stroke(); ctx.setLineDash([]);
+    // olas que brillan
+    for (const o of mundo.olas){
+      const p = proy(o.x, 0, o.z); if (!p || p.x < -40 || p.x > W + 40) continue;
+      const a = .05 + .1 * (.5 + .5 * Math.sin(t * 1.4 + o.f));
+      ctx.fillStyle = `rgba(150,180,255,${a})`; ctx.fillRect(p.x, p.y, o.l * p.s * 1.6, Math.max(.7, p.s * .6));
+    }
+    // camino de la luna sobre el agua
+    const lx = W / 2 + F * .78;
+    for (let i = 0; i < 26; i++){
+      const y = HY + 6 + i * i * .9; if (y > H) break;
+      const w = (8 + i * 2.2) * (.6 + .4 * Math.sin(t * 2 + i));
+      ctx.fillStyle = `rgba(210,220,255,${.10 - i * .003})`; ctx.fillRect(lx - w / 2 + Math.sin(t + i) * 4, y, w, 1.4);
+    }
+  }
+  // reflejos cálidos en el agua: columnas temblorosas bajo cada luz cercana a la orilla
+  function reflejo(x, y, zOrilla, color, fuerza, t){
+    const pa = proy(x, 0, zOrilla - 1); if (!pa || pa.x < -20 || pa.x > W + 20 || pa.y > H) return;
+    const pb = proy(x, -y * 1.15, zOrilla - 1);
+    const L = pb.y - pa.y, n = Math.max(3, Math.min(14, L / 3 | 0));
+    ctx.fillStyle = color;
+    for (let i = 0; i < n; i++){
+      const k = i / n, yy = pa.y + k * L, w = (1.5 + 3 * pa.s) * (1 - k * .5) * (.6 + .4 * Math.sin(t * 3.1 + i * 1.7 + x));
+      ctx.globalAlpha = fuerza * (1 - k) * .55;
+      ctx.fillRect(pa.x - w / 2 + Math.sin(t * 2.3 + i + x * .3) * 1.5 * pa.s, yy, w, Math.max(1, L / n * .55));
+    }
+    ctx.globalAlpha = 1;
+  }
+  function reflejos(t){
+    ctx.globalCompositeOperation = "lighter";
+    const a = mundo.aud;
+    if (t > a.tE) reflejo(-500, 18, 24, "#ffc56b", Math.min(1, (t - a.tE)) * 1.2, t);
+    for (const p of mundo.paseo.puntos) if (t > p.tE && (p.x % 8 === 0)) reflejo(p.x, p.y + 4, costa(p.x), p.col, Math.min(1, (t - p.tE) * 2) * .7, t);
+    for (const b of mundo.cosas){
+      if (b.tipo === "edif" && !b.auditorio && b.z0 < costa(b.x0) + 25 && t > b.tE){
+        reflejo((b.x0 + b.x1) / 2, b.h * .8, costa((b.x0 + b.x1) / 2), "#ffbf66", Math.min(1, t - b.tE) * .45, t);
+      }
+      if (b.tipo === "barco" && t > b.tE) reflejo(b.x, b.m * .6, b.z, b.col, Math.min(1, (t - b.tE) * 2) * .6, t);
+    }
+    if (t > mundo.arbol.tE) reflejo(75, 40, 150, "#ffd27a", .25, t);
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  function luz(px, py, r, color, alfa){
+    if (alfa <= 0 || px < -r || px > W + r || py < -r || py > H + r) return;
+    ctx.globalAlpha = alfa;
+    if (r < 2.2){ ctx.fillStyle = color; ctx.fillRect(px - r * .45, py - r * .45, r * .9, r * .9); return; }
+    ctx.drawImage(sprite(color), px - r, py - r, r * 2, r * 2);
+  }
+  function dibujarEdificio(b, t){
+    const on = clamp((t - b.tE) / 1.4, 0, 1);
+    const A = proy(b.x0, 0, b.z0), B = proy(b.x1, 0, b.z0);
+    if (!A || B.x < -20 || A.x > W + 20) return;
+    const At = proy(b.x0, b.h, b.z0), Bt = proy(b.x1, b.h, b.z0);
+    if (At.y > H + 5) return;
+    const Ct = proy(b.x1, b.h, b.z1), Dt = proy(b.x0, b.h, b.z1), Cb = proy(b.x1, 0, b.z1), Db = proy(b.x0, 0, b.z1);
+    if (!Ct) return;
+    const base = b.auditorio || b.torre ? [58, 50, 46] : [24 + b.tono, 30 + b.tono, 58 + b.tono];
+    const calido = on * (b.auditorio || b.torre ? 70 : 16);
+    const col = (k) => `rgb(${base[0] * k + calido | 0},${base[1] * k + calido * .55 | 0},${base[2] * k + calido * .2 | 0})`;
+    // lateral visible
+    if (C.x < b.x0){ ctx.fillStyle = col(.7); ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(At.x, At.y); ctx.lineTo(Dt.x, Dt.y); ctx.lineTo(Db.x, Db.y); ctx.fill(); }
+    else if (C.x > b.x1){ ctx.fillStyle = col(.7); ctx.beginPath(); ctx.moveTo(B.x, B.y); ctx.lineTo(Bt.x, Bt.y); ctx.lineTo(Ct.x, Ct.y); ctx.lineTo(Cb.x, Cb.y); ctx.fill(); }
+    // azotea
+    ctx.fillStyle = col(1.25); ctx.beginPath(); ctx.moveTo(At.x, At.y); ctx.lineTo(Bt.x, Bt.y); ctx.lineTo(Ct.x, Ct.y); ctx.lineTo(Dt.x, Dt.y); ctx.fill();
+    // fachada
+    ctx.fillStyle = col(1); ctx.fillRect(A.x, At.y, B.x - A.x, A.y - At.y);
+    const ancho = B.x - A.x, alto = A.y - At.y;
+    if (b.auditorio){
+      // el gran ventanal que mira al océano
+      const vx = A.x + ancho * .3, vw = ancho * .4, vy = At.y + alto * .18, vh = alto * .6;
+      ctx.fillStyle = on > 0 ? `rgba(255,${170 + 50 * on | 0},${90 + 40 * on | 0},${.25 + .75 * on})` : "#141a33";
+      ctx.fillRect(vx, vy, vw, vh);
+      ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = Math.max(.5, A.s * .6);
+      for (let k = 1; k < 6; k++){ ctx.beginPath(); ctx.moveTo(vx + vw * k / 6, vy); ctx.lineTo(vx + vw * k / 6, vy + vh); ctx.stroke(); }
+      // focos que bañan la fachada
+      if (on > 0){ ctx.globalCompositeOperation = "lighter"; luz(vx + vw / 2, vy + vh * .6, vw * 1.1, "#ff9a3c", .35 * on); ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over"; }
+      return;
+    }
+    if (b.torre){
+      if (on > 0){ ctx.globalCompositeOperation = "lighter"; luz((A.x + B.x) / 2, At.y + 2, 10 + A.s * 14, "#ffcf8a", on * .9); ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over"; }
+      return;
+    }
+    // ventanas: dos texturas por edificio (tenue / encendida); al encenderse se revelan de abajo arriba
+    if (ancho > 1.5 && alto > 2 && b.tex){
+      const rv = clamp((t - b.tE) / 1.6, 0, 1), tw = b.tex.l.width, th = b.tex.l.height;
+      if (rv < 1) ctx.drawImage(b.tex.t, A.x, At.y, ancho, alto);
+      if (rv > 0){
+        const sy = th * (1 - rv) | 0;
+        if (th - sy > 0) ctx.drawImage(b.tex.l, 0, sy, tw, th - sy, A.x, At.y + alto * (sy / th), ancho, alto * (1 - sy / th));
+      }
+    }
+    // luces de Navidad en el borde de la azotea
+    if (b.guirnalda && on > 0){
+      ctx.globalCompositeOperation = "lighter";
+      const n = Math.max(3, ancho / 6 | 0);
+      for (let k = 0; k <= n; k++){
+        const u = k / n; if (u > on * 1.4) break;
+        const x = At.x + (Bt.x - At.x) * u, y = At.y + Math.sin(u * Math.PI * 3) * A.s * .8;
+        luz(x, y, 2.5 + A.s * 3, b.colG, .9);
+      }
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    }
+    if (b.torreNaranja){
+      // corona naranja (la fibra de Orange Canarias)
+      const c = clamp((t - b.tE) / .8, 0, 1);
+      ctx.fillStyle = c > 0 ? `rgba(255,121,0,${.4 + .6 * c})` : "#2b2f4d";
+      ctx.fillRect(At.x, At.y, ancho, Math.max(2, A.s * 5));
+      if (c > 0){ ctx.globalCompositeOperation = "lighter"; luz((At.x + Bt.x) / 2, At.y, 24 + A.s * 40, "#ff7900", c * .8);
+        luz((At.x + Bt.x) / 2, At.y - A.s * 10, 4 + A.s * 5, "#ff3b3b", .5 + .5 * Math.sin(t * 4)); ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over"; }
+    }
+  }
+  function dibujarArbol(a, t){
+    const base = proy(a.x, 0, a.z), cima = proy(a.x, a.h, a.z); if (!base || !cima) return;
+    const r = a.r * base.s;
+    const on = clamp((t - a.tE) / 1.2, 0, 1);
+    // tronco y copa
+    ctx.fillStyle = "#2a1b12"; ctx.fillRect(base.x - r * .12, base.y - (base.y - cima.y) * .08, r * .24, (base.y - cima.y) * .08);
+    const g = ctx.createLinearGradient(base.x - r, 0, base.x + r, 0);
+    g.addColorStop(0, `rgb(${8 + 10 * on | 0},${30 + 40 * on | 0},${24 + 20 * on | 0})`); g.addColorStop(.5, `rgb(${14 + 20 * on | 0},${46 + 70 * on | 0},${34 + 30 * on | 0})`); g.addColorStop(1, "#06140f");
+    ctx.fillStyle = g;
+    for (let k = 0; k < 4; k++){   // pisos de ramas
+      const y0 = base.y - (base.y - cima.y) * (.06 + k * .21), y1 = cima.y + (base.y - cima.y) * (k * .12);
+      const rr = r * (1 - k * .2);
+      ctx.beginPath(); ctx.moveTo(base.x - rr, y0); ctx.lineTo(base.x, y1); ctx.lineTo(base.x + rr, y0); ctx.closePath(); ctx.fill();
+    }
+    // bombillas en espiral (solo las de delante), se encienden subiendo con el haz
+    ctx.globalCompositeOperation = "lighter";
+    const subida = clamp((t - a.tE) / Math.max(.6, a.tEstrella - a.tE), 0, 1);
+    for (const b of a.bombillas){
+      const frente = Math.sin(b.a); if (frente < -.2) continue;
+      if (b.y / a.h > subida) continue;
+      const p = proy(a.x + Math.cos(b.a) * b.r, b.y, a.z - frente * b.r); if (!p) continue;
+      const tw = .65 + .35 * Math.sin(t * 5 + b.a * 3);
+      luz(p.x, p.y, 2 + p.s * 3.4, b.col, tw * (.5 + .5 * frente));
+    }
+    // estrella
+    const est = clamp((t - a.tEstrella) / .5, 0, 1);
+    if (est > 0){
+      luz(cima.x, cima.y, 40 + base.s * 60 + Math.sin(t * 3) * 6, "#ffcf5a", est * .9);
+      luz(cima.x, cima.y, 10 + base.s * 12, "#ffffff", est);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = est > 0 ? "#fff3b0" : "#3a3a2a";
+    estrella(cima.x, cima.y, 3 + base.s * 4.5);
+  }
+  function estrella(x, y, r){
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++){ const rr = i % 2 ? r * .45 : r, a = -Math.PI / 2 + i * Math.PI / 5; ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+    ctx.fill();
+  }
+  function dibujarCadena(c, t){
+    let ant = null;
+    ctx.strokeStyle = "rgba(20,20,30,.8)"; ctx.lineWidth = 1; ctx.beginPath();
+    const pts = c.puntos.map(q => proy(q.x, q.y, q.z));
+    for (const p of pts){ if (!p) continue; ant ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); ant = p; }
+    ctx.stroke();
+    if (c === mundo.paseo){   // farolas del paseo
+      ctx.fillStyle = "#151827";
+      c.puntos.forEach((q, i) => { if (!q.poste) return; const a = pts[i], b = proy(q.x, 0, q.z); if (a && b) ctx.fillRect(a.x - .6, a.y, 1.2 + a.s * .2, b.y - a.y); });
+    }
+    ctx.globalCompositeOperation = "lighter";
+    c.puntos.forEach((q, i) => {
+      const p = pts[i]; if (!p || p.x < -10 || p.x > W + 10) return;
+      const on = clamp((t - q.tE) / .35, 0, 1); if (!on) return;
+      const tw = .7 + .3 * Math.sin(t * 6 + i);
+      luz(p.x, p.y, 2.2 + p.s * 3.2, q.col, on * tw);
+    });
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+  }
+  function dibujarBarco(b, t){
+    const p = proy(b.x, 0, b.z), m = proy(b.x, b.m, b.z); if (!p || !m || p.x < -30 || p.x > W + 30) return;
+    const l = b.l * p.s;
+    const vaiven = Math.sin(t * 1.5 + b.x) * .8 * p.s;
+    ctx.fillStyle = "#c9cfe6"; ctx.globalAlpha = .55;
+    ctx.beginPath(); ctx.moveTo(p.x - l / 2, p.y - 1.4 * p.s + vaiven); ctx.lineTo(p.x + l / 2, p.y - 1.4 * p.s + vaiven); ctx.lineTo(p.x + l * .38, p.y + vaiven); ctx.lineTo(p.x - l * .38, p.y + vaiven); ctx.fill();
+    ctx.globalAlpha = 1; ctx.strokeStyle = "rgba(200,205,225,.55)"; ctx.lineWidth = Math.max(.6, p.s * .3);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y - 1.4 * p.s + vaiven); ctx.lineTo(m.x, m.y + vaiven); ctx.stroke();
+    const on = clamp((t - b.tE) / .6, 0, 1);
+    ctx.globalCompositeOperation = "lighter";
+    luz(m.x, m.y + vaiven, 2 + p.s * 2.4, "#ffffff", .5 + .5 * on);
+    if (on > 0){   // barco engalanado: luces del mástil a proa y popa
+      for (let k = 1; k <= 6; k++){
+        const u = k / 7;
+        luz(lerp(m.x, p.x - l / 2, u), lerp(m.y, p.y - 1.4 * p.s, u) + vaiven, 1.2 + p.s * 1.4, b.col, on * .65);
+        luz(lerp(m.x, p.x + l / 2, u), lerp(m.y, p.y - 1.4 * p.s, u) + vaiven, 1.2 + p.s * 1.4, COL_BOMB[(k + 2) % 6], on * .65);
+      }
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+  }
+  function dibujarPlano(c, t){
+    if (c.tipo === "pantalan" || c.tipo === "dique"){
+      const a = proy(c.x0, c.tipo === "dique" ? 3 : .6, c.z), b = proy(c.x1, c.tipo === "dique" ? 3 : .6, c.z), a2 = proy(c.x0, 0, c.z), b2 = proy(c.x1, 0, c.z);
+      if (!a || !b) return;
+      ctx.fillStyle = c.tipo === "dique" ? "#1c2038" : "#2a2f4a";
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineTo(b2.x, b2.y + 1); ctx.lineTo(a2.x, a2.y + 1); ctx.fill();
+      if (c.tipo === "pantalan" && t > T_HAZ1 - 2.5){
+        ctx.globalCompositeOperation = "lighter";
+        for (let x = c.x0; x <= c.x1; x += 20){ const p = proy(x, 1.2, c.z); if (p) luz(p.x, p.y, 1.5 + p.s * 2, "#ffd27a", .7); }
+        ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+      }
+    } else if (c.tipo === "faro"){
+      const b = proy(c.x, 0, c.z), a = proy(c.x, 14, c.z); if (!a || !b) return;
+      ctx.fillStyle = "#d8dbe8"; ctx.fillRect(a.x - b.s * 1.4, a.y, b.s * 2.8, b.y - a.y);
+      const blink = (Math.sin(t * 3) > .3) ? 1 : .15;
+      ctx.globalCompositeOperation = "lighter"; luz(a.x, a.y, 4 + b.s * 8, "#3ddc84", blink);
+      if (t > c.tE) luz(a.x, a.y, 30 + b.s * 70, "#ff9a3c", clamp(1 - (t - c.tE) / 1.2, 0, 1));
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    } else if (c.tipo === "grua"){
+      const b = proy(c.x, 0, c.z), a = proy(c.x, c.h, c.z), br = proy(c.x - 30, c.h, c.z), bl = proy(c.x + 12, c.h, c.z);
+      if (!a || !b || !br) return;
+      ctx.strokeStyle = "#232843"; ctx.lineWidth = Math.max(1, b.s * 1.6);
+      ctx.beginPath(); ctx.moveTo(b.x - b.s * 4, b.y); ctx.lineTo(a.x, a.y); ctx.lineTo(b.x + b.s * 4, b.y); ctx.moveTo(br.x, br.y); ctx.lineTo(bl.x, bl.y); ctx.stroke();
+      ctx.globalCompositeOperation = "lighter";
+      luz(a.x, a.y - 2, 2 + b.s * 3, "#ff3b3b", Math.sin(t * 2.4 + c.x) > 0 ? 1 : .2);
+      if (t > c.tE){ const on = clamp((t - c.tE) / .8, 0, 1);
+        for (let k = 0; k <= 8; k++){ const u = k / 8; luz(lerp(br.x, bl.x, u), br.y, 1.5 + b.s * 2, k % 2 ? "#ffd27a" : "#ff7900", on * .9); } }
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    }
+  }
+
+  /* el haz naranja (la fibra) */
+  function posHaz(s){
+    const p = mundo.ruta.p;
+    for (let i = 1; i < p.length; i++){
+      if (p[i].s >= s && !p[i].salto){
+        const a = p[i-1], b = p[i], k = (s - a.s) / ((b.s - a.s) || 1);
+        return { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k), z: lerp(a.z, b.z, k) };
+      }
+    }
+    return p[p.length - 1];
+  }
+  function dibujarHaz(t, encima){
+    const k = clamp((t - T_HAZ0) / (T_HAZ1 - T_HAZ0), 0, 1), s = k * mundo.ruta.L;
+    if (t < T_HAZ0 - .3) return;
+    ctx.globalCompositeOperation = "lighter";
+    if (!encima){
+      // la estela de fibra que queda encendida en el suelo
+      const p = mundo.ruta.p; ctx.lineCap = "round";
+      for (const [ancho, alfa] of [[7, .12], [2.4, .6]]){
+        ctx.lineWidth = ancho; ctx.lineJoin = "round";
+        ctx.strokeStyle = `rgba(255,121,0,${alfa * (t > T_HAZ1 ? clamp(1 - (t - T_HAZ1) / 4, .35, 1) : 1)})`;
+        ctx.beginPath(); let ini = false;
+        for (let i = 0; i < p.length; i++){
+          if (p[i].s > s) { const q = posHaz(s), pq = proy(q.x, q.y, q.z); if (pq) ctx.lineTo(pq.x, pq.y); break; }
+          if (p[i].salto){ ini = false; continue; }
+          const pp = proy(p[i].x, p[i].y, p[i].z); if (!pp) continue;
+          ini ? ctx.lineTo(pp.x, pp.y) : ctx.moveTo(pp.x, pp.y); ini = true;
+        }
+        ctx.stroke();
+      }
+    } else if (k < 1){
+      // la cabeza del haz: siempre visible por encima de todo
+      const q = posHaz(s), pq = proy(q.x, q.y, q.z);
+      if (pq){
+        const pulso = 1 + Math.sin(t * 18) * .12;
+        luz(pq.x, pq.y, (60 + pq.s * 60) * pulso, "#ff7900", .55);
+        luz(pq.x, pq.y, (16 + pq.s * 18) * pulso, "#ffd2a0", 1);
+        luz(pq.x, pq.y, 5 + pq.s * 5, "#ffffff", 1);
+        // destello horizontal tipo lente
+        ctx.globalAlpha = .35; ctx.fillStyle = "#ffb070"; ctx.fillRect(pq.x - 80 * pulso, pq.y - .8, 160 * pulso, 1.6);
+        if (Math.random() < .9) chispas.push({ x: pq.x, y: pq.y, vx: (Math.random() - .5) * 120, vy: (Math.random() - .8) * 120, v: 1 });
+      }
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+  }
+
+  function dibujarParticulas(dt){
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = chispas.length - 1; i >= 0; i--){
+      const c = chispas[i]; c.x += c.vx * dt; c.y += c.vy * dt; c.vy += 160 * dt; c.v -= dt * 1.6;
+      if (c.v <= 0){ chispas.splice(i, 1); continue; }
+      luz(c.x, c.y, 5, "#ffb050", c.v);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    for (const c of confeti){
+      c.y += c.vy * dt; c.x += Math.sin(c.f + c.y * .01) * 30 * dt; c.r += c.vr * dt;
+      if (c.y > H + 20){ c.y = -20; c.x = Math.random() * W; }
+      const co = Math.cos(c.r), si = Math.sin(c.r), sy = Math.cos(c.r * 2.3);
+      ctx.setTransform(DPR * co, DPR * si, -DPR * si * sy, DPR * co * sy, DPR * c.x, DPR * c.y);
+      ctx.fillStyle = c.col; ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+    }
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    if (confeti.length){
+      ctx.globalCompositeOperation = "lighter";
+      for (const c of confeti) if (c.brillo) luz(c.x, c.y, 7, c.col, .45);
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    }
+  }
+  function lanzarConfeti(){
+    const cols = ["#ffcf5a", "#ff7900", "#ffb347", "#fff1c1", "#ff9a3c", "#e8b04a"];
+    const n = W < 600 ? 90 : 170;
+    confeti = Array.from({ length: n }, () => ({ x: Math.random() * W, y: -Math.random() * H, vy: 40 + Math.random() * 70,
+      w: 4 + Math.random() * 6, h: 7 + Math.random() * 8, r: Math.random() * 6, vr: (Math.random() - .5) * 6, f: Math.random() * 6,
+      col: cols[(Math.random() * cols.length) | 0], brillo: Math.random() < .3 }));
+  }
+
+  /* ---------- rótulos de lugares ---------- */
+  const ROTULOS = [
+    [0.9, 4.2, "Las Palmas de Gran Canaria", "Auditorio Alfredo Kraus"],
+    [4.4, 7.6, "Paseo iluminado", "Playa de Las Canteras"],
+    [8.0, 10.4, "En el corazón de la ciudad", "El gran árbol de Navidad"],
+    [10.6, 13.2, "Puerto de La Luz", "Muelle Deportivo"],
+    [13.6, 16.4, "Esta Navidad", "Toda la ciudad, conectada"],
+  ];
+  function rotulos(t){
+    let i = ROTULOS.findIndex(r => t >= r[0] && t < r[1]);
+    if (i === rotuloActual) return;
+    rotuloActual = i;
+    const el = $("rotulo-lugar");
+    el.classList.remove("visible");
+    if (i >= 0) setTimeout(() => { if (rotuloActual !== i) return; el.innerHTML = `<small>${ROTULOS[i][2]}</small><b>${ROTULOS[i][3]}</b>`; el.classList.add("visible"); }, 380);
+  }
+
+  /* ---------- bucle ---------- */
+  function cuadro(ahora){
+    if (!abierta) return;
+    raf = requestAnimationFrame(cuadro);
+    const t = (ahora - t0) / 1000, dt = Math.min(.05, (ahora - tAnt) / 1000 || .016); tAnt = ahora;
+    C = camara(t); HY = H * .5 + F * C.p;
+    const luzCiudad = clamp((t - T_HAZ0) / (T_HAZ1 - T_HAZ0 + 2), 0, 1);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    cielo(t, luzCiudad);
+    if (HY < H + 400){
+      tierraYMar(t, luzCiudad);
+      reflejos(t);
+      dibujarHaz(t, false);
+      for (const c of mundo.cosas){
+        if (c.tipo === "edif") dibujarEdificio(c, t);
+        else if (c.tipo === "arbol") dibujarArbol(c, t);
+        else if (c.tipo === "cadena") dibujarCadena(c, t);
+        else if (c.tipo === "barco") dibujarBarco(c, t);
+        else dibujarPlano(c, t);
+      }
+      // halo cálido sobre la ciudad encendida
+      if (luzCiudad > 0){
+        const g = ctx.createLinearGradient(0, HY - F * .25, 0, HY + F * .1);
+        g.addColorStop(0, "rgba(255,120,30,0)"); g.addColorStop(.7, `rgba(255,130,40,${.16 * luzCiudad})`); g.addColorStop(1, "rgba(255,130,40,0)");
+        ctx.fillStyle = g; ctx.fillRect(0, HY - F * .25, W, F * .35);
+      }
+      dibujarHaz(t, true);
+    }
+    dibujarParticulas(dt);
+    // HUD
+    $("hud-alt").textContent = `ALT ${Math.round(C.y * .9)} m`;
+    const seg = Math.floor(t); $("hud-tc").textContent = `00:00:${String(seg % 60).padStart(2, "0")}:${String(Math.floor((t % 1) * 25)).padStart(2, "0")}`;
+    rotulos(t);
+    if (t > T_FINAL && !finalMostrado){
+      finalMostrado = true; capa.classList.add("final"); $("final-dron").classList.add("visible"); lanzarConfeti();
+    }
+    // fundido de entrada del volumen
+    if (audio && !silenciado){ audio.volume = clamp(audio.volume + dt / 3.5 * volObjetivo, 0, volObjetivo); }
+  }
+
+  function medir(){
+    DPR = Math.min(window.devicePixelRatio || 1, 1.6);
+    W = capa.clientWidth; H = capa.clientHeight;
+    lienzo.width = W * DPR | 0; lienzo.height = H * DPR | 0;
+    F = Math.min(H * .95, W * (W < H ? 1.6 : 1.15));   // en vertical (móvil) se cierra el plano
+  }
+
+  function arrancar(){
+    finalMostrado = false; rotuloActual = -1; confeti = []; chispas = [];
+    capa.classList.remove("final"); $("final-dron").classList.remove("visible");
+    $("rotulo-lugar").classList.remove("visible");
+    const f = $("fundido-dron"); f.classList.remove("fuera"); requestAnimationFrame(() => requestAnimationFrame(() => f.classList.add("fuera")));
+    t0 = tAnt = performance.now();
+    // música: la misma canción de la parranda (o la que se haya cargado allí)
+    const principal = $("audio-villancico");
+    const src = principal.currentSrc || principal.src || "villancico.mp3";
+    if (!audio){ audio = new Audio(); audio.preload = "auto";
+      audio.addEventListener("error", () => { $("aviso-musica").hidden = false; }); }
+    if (audio.src !== src) audio.src = src;
+    audio.currentTime = 0; audio.volume = 0; audio.muted = silenciado;
+    $("aviso-musica").hidden = true;
+    const pr = audio.play(); if (pr) pr.catch(() => { $("aviso-musica").hidden = false; });
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(cuadro);
+  }
+
+  function abrir(){
+    if (abierta) return;
+    foco = document.activeElement;
+    if (!mundo) mundo = construirMundo();
+    capa.hidden = false; abierta = true;
+    document.documentElement.classList.add("sin-scroll");
+    medir(); arrancar();
+    $("dron-volver").focus({ preventScroll: true });
+  }
+  function cerrar(){
+    if (!abierta) return;
+    abierta = false; cancelAnimationFrame(raf);
+    if (audio){ audio.pause(); audio.currentTime = 0; }
+    capa.hidden = true;
+    document.documentElement.classList.remove("sin-scroll");
+    $("btn-navidad").classList.remove("activado");
+    if (foco) foco.focus({ preventScroll: true });
+  }
+  function alternarSonido(){
+    silenciado = !silenciado;
+    if (audio){ audio.muted = silenciado; if (!silenciado && audio.paused && abierta) audio.play().catch(() => {}); }
+    const b = $("dron-sonido"); b.textContent = silenciado ? "🔇" : "🔊";
+    b.setAttribute("aria-label", silenciado ? "Activar música" : "Silenciar música");
+  }
+
+  $("dron-volver").addEventListener("click", cerrar);
+  $("dron-salir").addEventListener("click", cerrar);
+  $("dron-repetir").addEventListener("click", arrancar);
+  $("dron-sonido").addEventListener("click", alternarSonido);
+  window.addEventListener("resize", () => { if (abierta) medir(); });
+  document.addEventListener("keydown", e => { if (abierta && e.key === "Escape") cerrar(); });
+  document.addEventListener("visibilitychange", () => { if (document.hidden && abierta && audio) audio.pause(); else if (!document.hidden && abierta && audio && !silenciado) audio.play().catch(() => {}); });
+  return { abrir, cerrar, _m: () => mundo, _t: () => (performance.now() - t0) / 1000, _saltar: s => { t0 -= s * 1000; if (audio) try { audio.currentTime += s; } catch(e){} } };
+})();
+
+/* ---------- el interruptor de la oficina ---------- */
+(() => {
+  const btn = $("btn-navidad");
+  function chispazo(){
+    const r = btn.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height * .45;
+    for (let i = 0; i < 22; i++){
+      const s = document.createElement("i"); s.className = "chispa-int";
+      s.style.left = cx + "px"; s.style.top = cy + "px"; document.body.appendChild(s);
+      const a = Math.random() * Math.PI * 2, d = 40 + Math.random() * 90;
+      s.animate([{ transform: "translate(0,0) scale(1)", opacity: 1 }, { transform: `translate(${Math.cos(a) * d}px,${Math.sin(a) * d + 30}px) scale(.2)`, opacity: 0 }],
+                { duration: 600 + Math.random() * 400, easing: "cubic-bezier(.2,.8,.3,1)" }).onfinish = () => s.remove();
+    }
+  }
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains("activado")) return;
+    btn.classList.add("activado"); chispazo();
+    setTimeout(DRON.abrir, 750);
+  });
+})();
 
 </script>
 </body>
